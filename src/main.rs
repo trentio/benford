@@ -1,11 +1,14 @@
+mod data;
+mod graph;
+mod parse;
 
 extern crate clap;
 
 use clap::{App, AppSettings, Arg};
 use std::str::FromStr;
-mod data;
+
 use data::*;
-mod graph;
+
 use graph::*;
 
 //todo Add a way to read values from a csv
@@ -32,6 +35,13 @@ fn main() {
                     .long("size")
                     .default_value("1000")
             )
+            .arg(
+                Arg::with_name("institution")
+                    .short('i')
+                    .long("long")
+                    .possible_values(&["veridian", "silverlake"])
+                    .default_value("veridian")
+            )
         )
         .get_matches();
 
@@ -51,7 +61,8 @@ fn main() {
                 println!("Tallest buildings!!! {:?}", create_graph(data));
             },
             UseCase::Transactions => {
-                let data: Vec<usize> = transaction_amounts().into_iter().map(|x| first_digit(x)).collect();
+                let inst = graph.value_of_t("institution").unwrap_or("veridian".to_string());
+                let data: Vec<usize> = transaction_amounts(inst).into_iter().map(|x| first_digit(x)).collect();
                 println!("transactions {:?}", create_graph(data));
             }
         }

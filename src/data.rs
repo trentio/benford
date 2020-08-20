@@ -3,6 +3,7 @@ extern crate rand;
 use rand::Rng;
 use std::convert::TryInto;
 use std::str::FromStr;
+use crate::parse::{pull_transactions_from_csv, pull_transactions_for_silverlake};
 
 pub fn gen_random_num_vector(len: isize) -> Vec<isize> {
     let mut rng = rand::thread_rng();
@@ -16,8 +17,10 @@ pub fn tallest_buildings() -> Vec<isize> {
     heights
 }
 
-pub fn transaction_amounts() -> Vec<isize> {
-    vec![1.1].iter().map(|&x| ignore_the_decimal(x)).collect()
+pub fn transaction_amounts(institution: String) -> Vec<isize> {
+
+    let values =  if institution == "veridian" { pull_transactions_from_csv() } else { pull_transactions_for_silverlake()};
+    values.iter().map(|&x| ignore_the_decimal(x)).collect()
 }
 
 fn ignore_the_decimal(num: f64) -> isize {
