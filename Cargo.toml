@@ -1,5 +1,5 @@
 [package]
-name = "banford"
+name = "benford"
 version = "0.1.0"
 authors = ["tjohnson <trent.johnson@banno.com>"]
 edition = "2018"

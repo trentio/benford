@@ -13,14 +13,13 @@ use data::*;
 use graph::*;
 use crate::breakout::println_breakdown;
 
-// todo text based breakdown
 // todo configurable output file
 // todo switch institution over to using an enum
 
 fn main() {
-    let matches = App::new("banford")
+    let matches = App::new("benford")
         .author("Trent Johnson <trent@trent.io>")
-        .about("Learned about Banford's law thought it was neat")
+        .about("Learned about Benford's law thought it was neat")
         .setting(AppSettings::SubcommandRequiredElseHelp)
         .subcommand(
         App::new("graph")
