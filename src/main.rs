@@ -1,3 +1,4 @@
+mod breakout;
 mod data;
 mod graph;
 mod parse;
@@ -10,8 +11,11 @@ use std::str::FromStr;
 use data::*;
 
 use graph::*;
+use crate::breakout::println_breakdown;
 
-//todo Add a way to read values from a csv
+// todo text based breakdown
+// todo configurable output file
+// todo switch institution over to using an enum
 
 fn main() {
     let matches = App::new("banford")
@@ -52,18 +56,19 @@ fn main() {
             UseCase::RandomNumbers => {
                 let size: isize = graph.value_of_t("size").unwrap_or(1000);
                 let data = gen_random_num_vector(size).into_iter().map(|x| first_digit(x)).collect();
-
+                println_breakdown(&data);
                 println!("Random Number distribution graph created {:?}", create_graph(data))
             },
             UseCase::TallestBuilding => {
                 let data: Vec<usize> = tallest_buildings().into_iter().map(|x| first_digit(x)).collect();
-
+                println_breakdown(&data);
                 println!("Tallest buildings!!! {:?}", create_graph(data));
             },
             UseCase::Transactions => {
                 let inst = graph.value_of_t("institution").unwrap_or("veridian".to_string());
                 let data: Vec<usize> = transaction_amounts(inst).into_iter().map(|x| first_digit(x)).collect();
-                println!("transactions {:?}", create_graph(data));
+                println_breakdown(&data);
+                println!("Transactions Graph Created: {:?}", create_graph(data));
             }
         }
     }
